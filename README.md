@@ -1,4 +1,4 @@
-# AwsNotes
+# Aws Notes and more
 
 * If you need to store a parameter using put-parameter in ssm and the value is url starting with http or https you need to edit ~/.aws/config and add the following line cli_follow_urlparam = false
 or else you will not get the url in the ssm
