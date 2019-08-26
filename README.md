@@ -24,3 +24,18 @@ https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json
 * Celndar interaction:
 https://github.com/txwkx/book-room
 https://github.com/sivadass/react-meeting-room
+
+* how to store / retrive private key in ssm ?
+store:
+how to save keyfile.key.pub containg the public key in ssm
+aws ssm put-parameter --name "$SSM_PATH_PUBLIC_KEY" --type SecureString --overwrite --region $AWS_REGION --value "`cat keyfile.key.pub | base64`"
+
+serverless.yml
+provider:
+  environment:
+     MY_PUBLIC_KEY_ENCODED: ${ssm:/${self:provider.stage}/......./PUBLIC_KEY~true}
+
+retrive in the lambda code:
+MY_PUBLIC_KEY_ENCODED is env variable containing the key
+const MY_PUBLIC_KEY = Buffer.from(MY_PUBLIC_KEY_ENCODED, 'base64').toString();
+
